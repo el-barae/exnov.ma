@@ -1,3 +1,37 @@
+const highlightsSection = document.getElementById('highlights');
+const highlightItems = document.querySelectorAll('.highlight-item');
+const titleElement = document.querySelector('#highlights h2');
+const images = document.querySelectorAll('#highlights .highlight-image');
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-in');
+        if (entry.target.classList.contains('highlight-item')) {
+          entry.target.classList.add('animate-slide-in-left');
+        }
+        if (entry.target.classList.contains('highlight-image')) {
+          entry.target.classList.add('animate-zoom-in');
+        }
+      } else {
+        entry.target.classList.remove('animate-fade-in');
+        entry.target.classList.remove('animate-slide-in-left');
+        entry.target.classList.remove('animate-zoom-in');
+      }
+    });
+  },
+  {
+    threshold: 0.2, // Trigger the animation when the element is 20% visible
+  }
+);
+
+observer.observe(highlightsSection);
+highlightItems.forEach((item) => observer.observe(item));
+observer.observe(titleElement);
+images.forEach((image) => observer.observe(image));
+
+
 //JavaScript code for the scroll-to-top button
 var scrollToTopButton = document.getElementById("scroll-to-top");
 
@@ -258,6 +292,16 @@ function removeAllActive() {
     });
 
 }
+
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 
 function submitEmailForm(form) {
     var obj = new XMLHttpRequest();
