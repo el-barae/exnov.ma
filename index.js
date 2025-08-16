@@ -16,15 +16,17 @@ app.post("/ajax/email", function(request, response) {
         secure: true,
         auth: {
             user: "esender7777@gmail.com",
-            pass: "yuoq jett rlcc glsz"
+            pass: "uhfe oluh wsoy vmkt"
         }
     });
+
+    console.log("Données reçues :", request.body); // Ajoute ce log pour debug
 
     var textBody = `FROM: ${request.body.name} EMAIL: ${request.body.email} MESSAGE: ${request.body.message}`;
     var htmlBody = `<h2>Mail From: ${request.body.name}</h2><p>email: <a href="mailto:${request.body.email}">${request.body.email}</a></p><p>${request.body.message}</p>`;
     var mail = {
         from: "esender7777@gmail.com",
-        to: "betexnov@gmail.com",
+        to: "elbarae.akachar@gmail.com",
         subject: "Mail From exnov.ma",
         text: textBody,
         html: htmlBody
@@ -32,16 +34,13 @@ app.post("/ajax/email", function(request, response) {
 
     transporter.sendMail(mail, function (err, info) {
         if(err) {
-            console.log(err);
-            response.status(500).json({ message: "Message not sent: An error occurred" });
+            console.error("Erreur lors de l'envoi de l'email:", err);
+            response.status(500).json({ message: "Message non envoyé", error: err.toString() });
         } else {
-            response.json({ message: `Message sent: ${info.messageId}` });
+            console.log("Email envoyé:", info);
+            response.json({ message: `Message envoyé: ${info.messageId}` });
         }
     });
-});
-
-app.listen(7000, function() {
-    console.log('Server is listening on port 7000');
 });
 
 app.get("/", function(request, response) {
@@ -50,4 +49,8 @@ app.get("/", function(request, response) {
 
 app.get("/test", function(request, response) {
     response.render("testPage");
+});
+
+app.listen(7000, function() {
+    console.log('Server is listening on port 7000');
 });

@@ -1,296 +1,2171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BET EXNOV</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/EXNOV.css">
     <script src="https://kit.fontawesome.com/cd087d14cf.js" crossorigin="anonymous"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --black: #333;
+            --yellow: #f3c306;
+            --orange: #d78406;
+        }
+
+        body {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--black);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Header - Navbar complètement refaite */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--yellow) 0%, #f1b805 100%);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        header.scrolled {
+            background: rgba(243, 195, 6, 0.95);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 2rem;
+            position: relative;
+        }
+
+        .logo-container {
+            z-index: 1001;
+        }
+
+        #logo {
+            height: 3rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+        }
+
+        #logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 4px 20px rgba(255,215,0,0.4));
+        }
+
+        /* Desktop Navigation avec style moderne */
+        .desktop-nav {
+            display: none;
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0.5rem;
+        }
+
+        .desktop-nav a {
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 12px 20px;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .desktop-nav a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translate(-50%, -50%);
+        }
+
+        .desktop-nav a:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .desktop-nav a:hover {
+            color: white;
+            background: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: var(--black);
+        }
+
+        /* Mobile Menu Button avec design moderne */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background: var(--black);
+            margin: 2px 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 2px;
+        }
+
+        /* Animation moderne du hamburger */
+        .mobile-menu-btn.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translateY(6px);
+            background: var(--white);
+        }
+
+        .mobile-menu-btn.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .mobile-menu-btn.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translateY(-6px);
+            background: var(--white);
+        }
+
+        .mobile-menu-btn.active {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: var(--black);
+        }
+
+        /* Mobile Menu Overlay moderne */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Menu avec design glassmorphism */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 400px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 5rem 2rem 2rem;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .mobile-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0.1) 0%, 
+                rgba(255,255,255,0.05) 50%, 
+                rgba(255,255,255,0.1) 100%);
+            z-index: -1;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu li {
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateX(100px) rotateY(45deg);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .mobile-menu.active li {
+            opacity: 1;
+            transform: translateX(0) rotateY(0deg);
+        }
+
+        .mobile-menu.active li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active li:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active li:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active li:nth-child(4) { transition-delay: 0.4s; }
+
+        .mobile-menu a {
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0.8rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255,215,0,0.1) 50%, 
+                transparent 100%);
+            transition: left 0.6s ease;
+        }
+
+        .mobile-menu a:hover::before {
+            left: 100%;
+        }
+
+        .mobile-menu a:hover, 
+        .mobile-menu a:active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(8px) scale(1.02);
+            border-color: rgba(255,215,0,0.5);
+            box-shadow: 0 8px 32px rgba(255,215,0,0.2);
+        }
+
+        .mobile-menu a::after {
+            content: '→';
+            opacity: 0;
+            transition: all 0.3s ease;
+            margin-left: auto;
+            font-size: 1.2rem;
+        }
+
+        .mobile-menu a:hover::after {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        /* Close button moderne */
+        .mobile-menu-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--white);
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-color: rgba(255,215,0,0.5);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: block;
+            }
+            
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* Enhanced Hero Section */
+        .company {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            color: white;
+            text-align: center;
+            padding: 85px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(243, 195, 6, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(215, 132, 6, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .slider {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        figure {
+            position: relative;
+            left: 0px;
+            width: 400%;
+            height: 100%;
+            animation: 25s slideShow infinite ease-in-out;
+        }
+
+        .slide {
+            position: relative;
+            width: 25%;
+            height: 100%;
+            float: left;
+            overflow: hidden;
+        }
+
+        .slide h1 {
+            position: absolute;
+            font-size: clamp(2rem, 5vw, 4rem);
+            width: 100%;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgb(255, 255, 255);
+            text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8);
+            font-weight: 700;
+            z-index: 2;
+            animation: textGlow 3s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8); }
+            to { text-shadow: 0px 4px 30px rgba(243, 195, 6, 0.6); }
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease-in-out;
+        }
+
+        .slide:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes slideShow {
+            0%, 20% { left: 0; }
+            25%, 45% { left: -100%; }
+            50%, 70% { left: -200%; }
+            75%, 95% { left: -300%; }
+            100% { left: 0; }
+        }
+
+        /* Enhanced Waves */
+        .waves-head {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            margin-bottom: -60px;
+            overflow: hidden;
+        }
+
+        .parallax > use {
+            animation: wave-animation 20s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+        }
+
+        .parallax > use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+            fill: rgba(255,255,255,0.7);
+        }
+
+        .parallax > use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 10s;
+            fill: rgba(255,255,255,0.5);
+        }
+
+        .parallax > use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 13s;
+            fill: rgba(255,255,255,0.3);
+        }
+
+        .parallax > use:nth-child(4) {
+            animation-delay: -5s;
+            animation-duration: 20s;
+            fill: #fff;
+        }
+
+        @keyframes wave-animation {
+            0% { transform: translate3d(-90px, 0, 0); }
+            100% { transform: translate3d(85px, 0, 0); }
+        }
+
+        /* Enhanced About Section */
+        #about {
+    background: #fff;
+    padding: 80px 0;
+}
+
+#about h2 {
+    color: var(--orange, #f97316);
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    margin-bottom: 30px;
+    font-weight: 700;
+    position: relative;
+}
+
+#about h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 30px;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    border-radius: 2px;
+}
+
+#about p {
+    padding: 0 30px;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+#about p:nth-child(2) { animation-delay: 0.2s; }
+#about p:nth-child(3) { animation-delay: 0.4s; }
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.animate-on-scroll:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #about {
+        padding: 50px 0;
+    }
+    
+    #about p {
+        padding: 0 15px;
+        font-size: 0.9rem;
+    }
+    
+    .grid-cols-2 {
+        gap: 8px;
+    }
+    
+    #about h2::after {
+        left: 15px;
+    }
+}
+
+/* Hover effects for value cards */
+#about .bg-gray-50:hover {
+    background-color: #f8fafc;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+        /* Enhanced Services Section */
+        #nos-services {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    padding: 100px 0;
+    margin-top: -20px;
+    position: relative;
+}
+
+#nos-services h2 {
+    color: #fff;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    margin-bottom: 50px;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+}
+
+#nos-services h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    border-radius: 2px;
+}
+
+.service-circle {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.service-circle:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3);
+}
+
+.service-circle h4 {
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.service-detail {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.8s ease forwards;
+}
+
+.service-detail:nth-child(1) { animation-delay: 0.1s; }
+.service-detail:nth-child(2) { animation-delay: 0.2s; }
+.service-detail:nth-child(3) { animation-delay: 0.3s; }
+.service-detail:nth-child(4) { animation-delay: 0.4s; }
+.service-detail:nth-child(5) { animation-delay: 0.5s; }
+.service-detail:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #nos-services {
+        padding: 50px 0;
+    }
+    
+    .service-circle {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    
+    .service-circle h4 {
+        font-size: 0.7rem;
+    }
+    
+    .service-circle i {
+        font-size: 1rem !important;
+    }
+}
+
+/* Animation des lignes de connexion (optionnel) */
+.service-circle::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(to bottom, #fbbf24, transparent);
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-circle:hover::before {
+    opacity: 0.5;
+}
+
+/* Styles pour la section Nos Projets */
+#nos-projets {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+#nos-projets h2, #nos-clients h2 {
+    color: var(--orange, #f97316);
+    position: relative;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+#nos-projets h2::after, #nos-clients h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    border-radius: 2px;
+}
+
+/* Animations d'entrée */
+.bg-yellow-100, .bg-white {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.8s ease forwards;
+}
+
+.bg-yellow-100:nth-child(1) { animation-delay: 0.1s; }
+.bg-yellow-100:nth-child(2) { animation-delay: 0.2s; }
+.bg-yellow-100:nth-child(3) { animation-delay: 0.3s; }
+.bg-yellow-100:nth-child(4) { animation-delay: 0.4s; }
+
+.bg-white:nth-child(1) { animation-delay: 0.5s; }
+.bg-white:nth-child(2) { animation-delay: 0.6s; }
+.bg-white:nth-child(3) { animation-delay: 0.7s; }
+.bg-white:nth-child(4) { animation-delay: 0.8s; }
+
+.client-category {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.8s ease forwards;
+}
+
+.client-category:nth-child(1) { animation-delay: 0.1s; }
+.client-category:nth-child(2) { animation-delay: 0.2s; }
+.client-category:nth-child(3) { animation-delay: 0.3s; }
+.client-category:nth-child(4) { animation-delay: 0.4s; }
+.client-category:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effects */
+.client-category:hover .bg-gradient-to-br {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #nos-projets, #nos-clients {
+        padding: 50px 0;
+    }
+    
+    .grid {
+        gap: 4px;
+    }
+    
+    .client-category h3 {
+        font-size: 0.75rem;
+    }
+    
+    .client-category ul li {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .xl\\:grid-cols-5 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Effet de survol sur les cartes de projets */
+#nos-projets .border-l-4:hover {
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+#nos-projets .border-yellow-400:hover {
+    border-color: #f97316;
+    background: linear-gradient(135deg, #fef3c7, #fed7aa);
+}
+
+#nos-projets .border-gray-400:hover {
+    border-color: #6b7280;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+}
+
+.timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #f59e0b;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        .value-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid #fbbf24;
+            position: relative;
+            max-width: 400px;
+            margin: 2rem 0;
+        }
+        
+        .value-card-left {
+            margin-right: auto;
+            margin-left: 2rem;
+        }
+        
+        .value-card-right {
+            margin-left: auto;
+            margin-right: 2rem;
+        }
+        
+        .value-number {
+            position: absolute;
+            top: -20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+        
+        .value-number-left {
+            right: -30px;
+        }
+        
+        .value-number-right {
+            left: -30px;
+        }
+        
+        .value-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .value-description {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .value-card {
+                margin-left: 1rem;
+                margin-right: 1rem;
+                max-width: none;
+            }
+            
+            .value-card-left,
+            .value-card-right {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            .timeline-line {
+                left: 2rem;
+            }
+            
+            .timeline-dot {
+                left: 2rem;
+            }
+            
+            .value-number-left,
+            .value-number-right {
+                left: -30px;
+                right: auto;
+            }
+        }
+
+        /* Enhanced Specialties Section */
+        #highlights {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        #highlights h2 {
+            color: var(--orange);
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            margin-bottom: 50px;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+        }
+
+        #highlights h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            border-radius: 2px;
+        }
+
+        .highlight-item {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        .highlight-item:nth-child(even) {
+            transform: translateX(50px);
+            animation-name: slideInRight;
+        }
+
+        .highlight-item:nth-child(2) { animation-delay: 0.2s; }
+        .highlight-item:nth-child(3) { animation-delay: 0.4s; }
+        .highlight-item:nth-child(4) { animation-delay: 0.6s; }
+        .highlight-item:nth-child(5) { animation-delay: 0.8s; }
+        .highlight-item:nth-child(6) { animation-delay: 1s; }
+        .highlight-item:nth-child(7) { animation-delay: 1.2s; }
+        .highlight-item:nth-child(8) { animation-delay: 1.4s; }
+        .highlight-item:nth-child(9) { animation-delay: 1.6s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .highlight-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            transition: left 0.5s ease;
+        }
+
+        .highlight-content:hover::before {
+            left: 0;
+        }
+
+        .highlight-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .highlight-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .highlight-image {
+            transition: all 0.4s ease;
+            border-radius: 15px;
+        }
+
+        .highlight-content:hover .highlight-image {
+            transform: scale(1.08);
+        }
+
+        .highlight-description h3 {
+            color: var(--orange);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .highlight-description p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Contact Section */
+        #contact {
+            background: linear-gradient(135deg, var(--orange) 0%, #e67e00 100%);
+            padding: 80px 0 50px;
+            position: relative;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        #contact h2 {
+            margin-left: 20px;
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            margin-bottom: 40px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            padding: 2rem;
+        }
+
+        .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            padding: 2rem;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .form-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(215, 132, 6, 0.1);
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--black), #2c3e50);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            transition: left 0.3s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 0;
+        }
+
+        .btn-submit span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Enhanced Social Icons */
+        .social-icons a {
+            color: var(--black);
+            font-size: 1.6rem;
+            margin: 0 8px;
+            padding: 12px;
+            border-radius: 50%;
+            background: rgba(243, 195, 6, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .social-icons a:hover {
+            background: var(--yellow);
+            color: var(--black);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Scroll to top button */
+        #scroll-to-top {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            font-size: 20px;
+            border: none;
+            outline: none;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            color: var(--black);
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        #scroll-to-top:hover {
+            background: linear-gradient(135deg, var(--orange), #e67e00);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            /* .desktop-nav {
+                display: block;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .navbar-container {
+                padding: 0.5rem 1.5rem;
+            } */
+
+            .contact-form,
+            .contact-info {
+                padding: 2.5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            /* .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .navbar-container {
+                padding: 0.5rem 1rem;
+            }
+
+            #logo {
+                height: 3rem;
+            } */
+
+            .slider {
+                height: 350px;
+                border-radius: 15px;
+            }
+
+            .slide h1 {
+                font-size: 1.8rem;
+            }
+
+            .service {
+                margin: 15px;
+                padding: 20px 15px;
+                flex-basis: auto;
+            }
+
+            .service h3 {
+                font-size: 1.1rem;
+            }
+
+            .service p {
+                font-size: 0.85rem;
+            }
+
+            .highlight-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .highlight-image-container {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .highlight-description {
+                width: 100%;
+            }
+
+            .highlight-description h3 {
+                font-size: 1.2rem;
+            }
+
+            .highlight-description p {
+                font-size: 0.85rem;
+            }
+
+            #contact {
+                padding: 60px 0 40px;
+            }
+
+            #contact .grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .contact-form,
+            .contact-info {
+                padding: 1.5rem;
+            }
+
+            .form-input {
+                padding: 10px 14px;
+                font-size: 0.85rem;
+            }
+
+            .btn-submit {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .social-icons a {
+                font-size: 1.4rem;
+                width: 45px;
+                height: 45px;
+                margin: 0 5px;
+            }
+
+            #scroll-to-top {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .navbar-container {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .mobile-menu {
+                width: 90%;
+            }
+
+            .company {
+                padding: 100px 0 40px;
+            }
+
+            .slider {
+                height: 300px;
+                border-radius: 10px;
+            }
+
+            .slide h1 {
+                font-size: 1.5rem;
+            }
+
+            #nos-services, #highlights, #contact {
+                padding: 50px 0;
+            }
+
+            .service {
+                margin: 10px;
+                padding: 18px 12px;
+            }
+
+            .highlight-content {
+                padding: 15px;
+            }
+
+            .contact-form,
+            .contact-info {
+                padding: 1.25rem;
+            }
+        }
+
+        /* Intersection Observer Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Disable scrolling when mobile menu is open */
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        #whatsapp {
+	display: none;
+	position: fixed;
+	bottom: 16px;
+	left: 30px;
+	z-index: 99;
+	border: none;
+	outline: none;
+	cursor: pointer;
+  }
+
+  @media(max-width: 1000px)
+  {
+	  #whatsapp img{
+		  height: 60px;
+		  width: 60px;
+	  }
+  }
+    </style>
 </head>
 
 <body class="bg-gray-100 font-sans">
-<header class="bg-yellow-500 fixed w-full z-50">
-    <div class="navbar flex justify-between items-center p-2">
-        <img id="logo" src="./PHOTO/EXNOV.png" alt="logo" class="h-16">
-      
-        <nav class="hidden md:flex space-x-8">
-          <ul class="flex space-x-8">
-            <li><a href="#about" class="text-black font-bold uppercase">QUI SOMMES-NOUS?</a></li>
-            <li><a href="#nos-services" class="text-black font-bold uppercase">NOS SERVICES</a></li>
-            <li><a href="#points-forts" class="text-black font-bold uppercase">NOS SPECIALITES</a></li>
-            <li><a href="#contact" class="text-black font-bold uppercase">CONTACT</a></li>
-          </ul>
-        </nav>
-      
-        <div id="hamburger-icon" class="block md:hidden cursor-pointer">
-          <div class="bar1 w-8 h-1 bg-white my-1 transition-all duration-300"></div>
-          <div class="bar2 w-8 h-1 bg-white my-1 transition-all duration-300"></div>
-          <div class="bar3 w-8 h-1 bg-white my-1 transition-all duration-300"></div>
-        </div>
-      </div>
-      
-      <ul class="mobile-menu hidden flex-col items-center bg-yellow-500 md:hidden">
-        <li class="my-4"><a href="#about" class="text-white text-2xl font-bold uppercase">QUI SOMMES-NOUS?</a></li>
-        <li class="my-4"><a href="#nos-services" class="text-white text-2xl font-bold uppercase">NOS SERVICES</a></li>
-        <li class="my-4"><a href="#points-forts" class="text-white text-2xl font-bold uppercase">NOS SPECIALITES</a></li>
-        <li class="my-4"><a href="#contact" class="text-white text-2xl font-bold uppercase">CONTACT</a></li>
-      </ul>
-</header>
-
-<main>
-    <div class="company bg-gray-700 text-center text-white pt-20 pb-6">
-        <div class="slider relative w-full h-96 overflow-hidden">
-            <figure class="absolute left-0 w-[400%] animate-slide">
-                <div class="slide w-[25%] float-left">
-                    <h1 class="text-8xl my-20 text-shadow-lg">Bureau d'Etudes Techinques</h1>
-                    <img src="./PHOTO/img1.jpg" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="slide w-[25%] float-left">
-                    <h1 class="text-8xl my-20 text-shadow-lg">EXNOV</h1>
-                    <img src="./PHOTO/img2.jpg" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="slide w-[25%] float-left">
-                    <h1 class="text-8xl my-20 text-shadow-lg">EXPERTISE</h1>
-                    <img src="./PHOTO/img3.jpg" alt="" class="w-full h-full object-cover">
-                </div>
-                <div class="slide w-[25%] float-left">
-                    <h1 class="text-8xl my-20 text-shadow-lg">INNOVATION</h1>
-                    <img src="./PHOTO/img4.png" alt="" class="w-full h-full object-cover">
-                </div>
-            </figure>
-        </div>
-
-        <div class="relative">
-            <svg
-                class="waves-head"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 24 150 28"
-                preserveAspectRatio="none"
-                shape-rendering="auto"
-            >
-                <defs>
-                    <path
-                        id="gentle-wave"
-                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-                    />
-                </defs>
-                <g class="parallax">
-                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-                </g>
-            </svg>
-        </div>
-    </div>
-
-    <section id="about" class="container mx-auto py-16">
-        <div class="flex flex-col md:flex-row items-center">
-            <div id="about-p" class="md:w-1/2 px-4">
-                <h2 class="text-4xl font-bold mb-4">QUI SOMMES-NOUS?</h2>
-                <p class="mb-4">BET EXNOV est un bureau d’étude technique du bâtiment et travaux publiques basé à Tanger et fondé par trois ingénieurs expérimentés et passionnés du génie civil.</p>
-                <p class="mb-4">L’objectif d’EXNOV est la réalisation des études techniques et financières des structures simples et complexes en béton armé ainsi qu’en charpente métallique et la VRD, avec l’optimisation des quantités et du temps de réalisation des travaux.</p>
-                <p class="mb-4">Parmi les points forts d’EXNOV c’est la variété des options et types de solutions.</p>
-                <p class="mb-4">Basant sur notre véritable expérience, notre bureau d’étude propose une variété des options et types de solutions parmi ces solutions nous spécialisons dans les planchers réticulés, dalles en post-tension et les dalles mixtes (acier-béton).</p>
+    <header>
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img id="logo" src="./PHOTO/EXNOV.png" alt="logo">
             </div>
-            <div class="md:w-1/2 px-4">
-                <img src="./PHOTO/01.jpg" alt="">
-            </div>
-        </div>
-    </section>
-
-    <div id="waves">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#333" fill-opacity="1" d="M0,192L80,202.7C160,213,320,235,480,229.3C640,224,800,192,960,176C1120,160,1280,160,1360,160L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
-    </div>
-
-    <section id="nos-services" class="py-16 bg-gray-100">
-        <div class="container mx-auto">
-            <h2 class="text-4xl font-bold mb-8 text-center">NOS SERVICES</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="service text-center">
-                    <img src="./PHOTO/02.jpg" alt="Service 1" class="mx-auto mb-4 max-h-48">
-                    <h3 class="text-2xl font-bold mb-2">CONCEPTION</h3>
-                    <p>Nous faisons la conception de la structure porteuse et des lots techniques à partir des plans architecturels en respectant le coté esthétique, le coté budgétaire et suivant les règles de l’art.</p>
-                </div>
-                <div class="service text-center">
-                    <img src="./PHOTO/03.jpg" alt="Service 2" class="mx-auto mb-4 max-h-48">
-                    <h3 class="text-2xl font-bold mb-2">ETUDE TECHNIQUE DES PLANS</h3>
-                    <p>Nous réalisons les études d’APS (Avant Projet Sommaire), APD (Avant Projet Détaillé) et DCE (Dossier de Consultation des Entreprises) avec le respect des délais et l’optimisation des quantités et des couts.</p>
-                </div>
-                <div class="service text-center">
-                    <img src="./PHOTO/04.jpg" alt="Service 3" class="mx-auto mb-4 max-h-48">
-                    <h3 class="text-2xl font-bold mb-2">EXPERTISE ET DIAGNOSTIC</h3>
-                    <p>Nous réalisons des diagnostics des structures existantes et la réhabilitation des ouvrages.</p>
-                </div>
-                <div class="service text-center">
-                    <img src="./PHOTO/05.jpg" alt="Service 4" class="mx-auto mb-4 max-h-48">
-                    <h3 class="text-2xl font-bold mb-2">ASSISTANCE TECHNIQUE</h3>
-                    <p>Nous accompagnons nos clients tout au long du chantier pour s’assurer que le projet soit exécuté selon les plans et les spécifications.</p>
-                </div>
-                <div class="service text-center">
-                    <img src="./PHOTO/06.jpg" alt="Service 5" class="mx-auto mb-4 ">
-                    <h3 class="text-2xl font-bold mb-2">FORMATION</h3>
-                    <p>Nous proposons des formations sur les logiciels de calcul de structures et sur les normes de construction.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="highlights" class="py-12 bg-gray-100 animate-fade-in">
-        <div class="container mx-auto px-4">
-          <h2 class="text-4xl font-bold mb-8 text-center animate-fade-in-up">OUR SPECIALTIES</h2>
-          <div class="highlight-item mb-8 animate-slide-in-left">
-            <div class="highlight-content flex items-start space-x-4">
-              <div class="highlight-image-container w-1/3">
-                <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg animate-zoom-in">
-              </div>
-                  <div class="highlight-description w-2/3">
-                        <h3 class="text-2xl font-bold mb-2">PLANCHES RETICULAIRES</h3>
-                        <p>Les planchés réticulaires offrent une grande liberté de
-                        conception architecturelle, la possibilité de supprimer les
-                        retombées des poutres, une distance entre les poteaux
-                        jusqu’au 10m, une mise en œuvre de coffrage facile et
-                        rapide, et une optimisation dans le temps d’exécution.</p>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="highlight-item mb-8 animate-slide-in-left">
-                <div class="highlight-content flex items-start space-x-4">
-                  <div class="highlight-image-container w-1/3">
-                    <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-                  </div>
-                  <div class="highlight-description w-2/3">
-                    <h3 class="text-2xl font-bold mb-2">DALLE POST TENSION</h3>
-                    <p>Parmi les avantages des dalles par Post-Tension c’est la
-                        possibilité d’atteindre des portées jusqu’à 15m sans
-                        retombés, ce qui est très important pour résoudre les
-                        contrainte des espaces ouvertes ( sous sols et les salles de
-                        conférence…).</p>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="highlight-item mb-8 animate-slide-in-left">
-            <div class="highlight-content flex items-start space-x-4">
-              <div class="highlight-image-container w-1/3">
-                <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-              </div>
-              <div class="highlight-description w-2/3">
-                    <h3 class="text-2xl font-bold mb-2">DALLES ALVEOLEES</h3>
-                    <p>Une dalle alvéolée est un élément préfabriqué en béton précontraint permettant la réalisation de planchers de grandes portées et de faible encombrement, destinée aux bâtiments non résidentiels, leur performance permet de réaliser rapidement un plancher jusqu’à 19 mètres de portée avec un coulage rapide des clavetages ne nécessitant que peu, voire pas d’acier complémentaire, notre bureau est expérimenté dans le dimensionnement et l'installation de ce type des dalles. </p>
-                
-            </div>
-        </div>
-    </div>
-    <div class="highlight-item mb-8 animate-slide-in-left">
-        <div class="highlight-content flex items-start space-x-4">
-          <div class="highlight-image-container w-1/3">
-            <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-          </div>
-          <div class="highlight-description w-2/3">
-                    <p>Ce sont les dalles les plus fréquent au domaine du génie civil, l’avantage de ces types de dalles c’est qu’ils sont les moins chers et qu’ils ne nécessitent pas une main d’ouvre hautement qualifiée, notre bureau d’étude est toujours en service quand il s’agit de ces types de construction. </p>
-               
-            </div>
-        </div>
-    </div>
-    <div class="highlight-item mb-8 animate-slide-in-left">
-        <div class="highlight-content flex items-start space-x-4">
-          <div class="highlight-image-container w-1/3">
-            <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-          </div>
-          <div class="highlight-description w-2/3">
-                    <h3 class="text-2xl font-bold mb-2">DALLES CORPS CREUX</h3>
-                    <p>Plancher hourdis, ce sont les dalles les plus fréquent au domaine du génie civil, l’avantage de ces types de dalles c’est qu’ils sont les moins chers et qu’ils ne nécessitent pas une main d’ouvre hautement qualifiée, notre bureau d’étude est toujours en service quand il s’agit de ces types de construction.</p>
-              
-            </div>
-        </div>
-    </div>
-    <div class="highlight-item mb-8 animate-slide-in-left">
-        <div class="highlight-content flex items-start space-x-4">
-          <div class="highlight-image-container w-1/3">
-            <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-          </div>
-          <div class="highlight-description w-2/3">
-                    <h3 class="text-2xl font-bold mb-2">DALLES MIXTES </h3>
-                    <p>Une dalle mixte est un élément de construction des bâtiments métalliques à ossature mixte. Elle est composée d’une tôle nervurée sur laquelle on coule une dalle en béton comportant un léger treillis d’armature destiné à limiter la fissuration du béton due au retrait et aux effets de la température, pour un dimensionnement correct d’une dalle mixte vous trouvez toujours notre bureau à votre service.</p>
-             
-            </div>
-        </div>
-    </div>
-    <div class="highlight-item mb-8 animate-slide-in-left">
-        <div class="highlight-content flex items-start space-x-4">
-          <div class="highlight-image-container w-1/3">
-            <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-          </div>
-          <div class="highlight-description w-2/3">
-                    <h3 class="text-2xl font-bold mb-2">CHARPENTE METALLIQUE </h3>
-                    <p>La charpente métallique, la solution efficace pour les espaces de l’industrie, Note bureau d’étude est capable avec ces équipes de faire les études, suivi et l’expertise de tout type de structure métallique.</p>
-            </div>
-        </div>
-    </div>
-    <div class="highlight-item mb-8 animate-slide-in-left">
-        <div class="highlight-content flex items-start space-x-4">
-          <div class="highlight-image-container w-1/3">
-            <img src="./PHOTO/08.jpeg" alt="specialite 1" class="highlight-image w-full max-w-xs object-cover rounded-lg shadow-lg">
-          </div>
-          <div class="highlight-description w-2/3">
-                    <h3 class="text-2xl font-bold mb-2">VRD </h3>
-                    <p>Les VRD, les Voirie et Réseau Divers signifie l’ensemble des travaux pour raccorder un bâtiment ou un espace aux voies et aux différents réseaux existants (eau potable, assainissement, électricité, fibre optique, …) nous serons à votre disposition pour réaliser tout type de travaux de VRD.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-
-<section id="contact" class="bg-orange-500 py-12">
-    <div class="container mx-auto px-4">
-        <h2 class="text-white text-3xl font-bold mb-8">CONTACTER-NOUS</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 md:gap-32">
-            <form id="emailForm" action="/ajax/email" method="post" onsubmit="return submitEmailForm(this);" class="bg-white p-8 rounded-lg shadow-lg">
-                <!-- Form fields -->
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 text-md font-bold mb-2">Nom:</label>
-                    <input type="text" id="name" name="name" required class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-blue-500 focus:outline-none">
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 text-md font-bold mb-2">Email:</label>
-                    <input type="email" id="email" name="email" required class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-blue-500 focus:outline-none">
-                </div>
-                <div class="mb-6">
-                    <label for="message" class="block text-gray-700 text-md font-bold mb-2">Message:</label>
-                    <textarea id="message" name="message" rows="5" required class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:border-blue-500 focus:outline-none"></textarea>
-                </div>
-                <!-- Submit button -->
-                <button type="submit" class="bg-black text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700">
-                    Envoyer
-                </button>
-            </form>
-            <div class="contact-info bg-white p-8 rounded-lg shadow-lg">
-                <h3 class="text-2xl font-bold mb-4">Informations de contact</h3>
-                <ul class="list-disc pl-6 mb-4">
-                    <li><i class="fa-solid fa-location-dot text-gray-600 mr-2"></i> Bd MOULAY ISMAIL N°22 Etage5 N°19 Tanger</li>
-                    <li><i class="fa-solid fa-phone text-gray-600 mr-2"></i> (+212) 648-409016</li>
-                    <li><i class="fa-solid fa-envelope text-gray-600 mr-2"></i> exnov@exnov.ma</li>
+            
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#about">QUI SOMMES-NOUS?</a></li>
+                    <li><a href="#nos-services">NOS SERVICES</a></li>
+                    <li><a href="#highlights">NOS SPÉCIALITÉS</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
                 </ul>
-                <div class="social-icons">
-                    <a href="#" class="text-gray-600 hover:text-blue-600 mr-4"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="text-gray-600 hover:text-pink-600 mr-4"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="text-gray-600 hover:text-blue-900"><i class="fa-brands fa-linkedin"></i></a>
+            </nav>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu mobile">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobile-menu">
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Fermer le menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#about" class="mobile-link">QUI SOMMES-NOUS?</a></li>
+            <li><a href="#nos-services" class="mobile-link">NOS SERVICES</a></li>
+            <li><a href="#highlights" class="mobile-link">NOS SPÉCIALITÉS</a></li>
+            <li><a href="#contact" class="mobile-link">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="company bg-gray-700 text-center text-white pt-20 ">
+            <div class="slider relative w-full h-96 overflow-hidden">
+                <figure class="absolute left-0 w-[400%] h-full">
+                    <div class="slide w-[25%] float-left h-full">
+                        <h1 class="absolute top-1/2 text-4xl md:text-6xl font-bold text-shadow-lg z-10">Bureau d'Etudes Techniques</h1>
+                        <div class="w-full h-full bg-gradient-to-r from-blue-900 to-gray-800 flex items-center justify-center">
+                            <img src="./PHOTO/img1.jpg" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="slide w-[25%] float-left h-full">
+                        <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl md:text-6xl font-bold text-shadow-lg z-10">EXNOV</h1>
+                        <div class="w-full h-full bg-gradient-to-r from-yellow-600 to-orange-600 flex items-center justify-center">
+                            <img src="./PHOTO/img2.jpg" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="slide w-[25%] float-left h-full">
+                        <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl md:text-6xl font-bold text-shadow-lg z-10">EXPERTISE</h1>
+                        <div class="w-full h-full bg-gradient-to-r from-green-700 to-blue-700 flex items-center justify-center">
+                            <img src="./PHOTO/img3.jpg" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="slide w-[25%] float-left h-full">
+                        <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl md:text-6xl font-bold text-shadow-lg z-10">INNOVATION</h1>
+                        <div class="w-full h-full bg-gradient-to-r from-purple-700 to-pink-700 flex items-center justify-center">
+                            <img src="./PHOTO/img4.png" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </figure>
+            </div>
+
+            <div class="relative">
+                <svg
+                    class="waves-head"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28"
+                    preserveAspectRatio="none"
+                    shape-rendering="auto"
+                >
+                    <defs>
+                        <path
+                            id="gentle-wave"
+                            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                        />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <section id="about" class="container mx-auto pt-16">
+    <div class="flex flex-col md:flex-row items-center">
+        <div id="about-p" class="md:w-1/2 px-4 animate-on-scroll">
+            <h2 class="text-4xl font-bold mb-4">QUI SOMMES-NOUS?</h2>
+            <p class="mb-4">BET EXNOV est un bureau d'études techniques en bâtiment et travaux publics basé à Tanger, spécialisé dans le génie civil. Nous combinons expertise, innovation, intégrité et esprit de collaboration pour offrir des solutions techniques adaptées aux enjeux actuels de la construction.</p>
+            
+            <!-- Notre engagement section -->
+            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 p-4 rounded-lg mt-6 mb-6">
+                <h3 class="text-xl font-bold text-white mb-2 flex items-center">
+                    <i class="fas fa-handshake mr-2"></i>
+                    Notre engagement
+                </h3>
+                <p class="text-gray-500 font-semibold">Nous accompagnons nos clients avec des solutions sur mesure, alliant performance, optimisation des coûts et des délais, tout en garantissant le respect des normes les plus strictes en matière de sécurité, de durabilité et de qualité technique.</p>
+            </div>
+        </div>
+        
+        <!-- Nos valeurs section -->
+        <div class="md:w-1/2 px-4 animate-on-scroll">
+            <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-1 rounded-2xl">
+                <div class="bg-white rounded-2xl p-8">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-gem text-4xl text-orange-500 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Nos valeurs</h3>
+                    </div>
+                    
+                    <!-- Valeurs grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl font-bold text-yellow-500 mb-1">01</div>
+                            <h4 class="font-bold text-orange-500 mb-1">Innovation</h4>
+                            <p class="text-xs text-gray-600">Nous plaçons l'innovation au cœur de notre démarche</p>
+                        </div>
+                        
+                        <div class="text-center p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl font-bold text-yellow-500 mb-1">02</div>
+                            <h4 class="font-bold text-orange-500 mb-1">Expertise</h4>
+                            <p class="text-xs text-gray-600">La qualité de notre travail est notre priorité absolue</p>
+                        </div>
+                        
+                        <div class="text-center p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl font-bold text-yellow-500 mb-1">03</div>
+                            <h4 class="font-bold text-orange-500 mb-1">Intégrité</h4>
+                            <p class="text-xs text-gray-600">Nous menons nos affaires avec transparence et respect</p>
+                        </div>
+                        
+                        <div class="text-center p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl font-bold text-yellow-500 mb-1">04</div>
+                            <h4 class="font-bold text-orange-500 mb-1">Collaboration</h4>
+                            <p class="text-xs text-gray-600">Nous croyons à la force du travail en équipe</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-</main>
 
-<footer class="bg-gray-900 text-white py-8">
-    <div class="container mx-auto text-center">
-        <p>&copy; 2024 BET EXNOV. Tous droits réservés.</p>
+        <div class="wave-separator">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#333" fill-opacity="1" d="M0,192L80,202.7C160,213,320,235,480,229.3C640,224,800,192,960,176C1120,160,1280,160,1360,160L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+            </svg>
+        </div>
+
+        <section id="nos-services" class="py-16 bg-gray-800">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-center text-white">NOS SERVICES</h2>
+        
+        <!-- Services en disposition circulaire inspirée de l'image -->
+        <div class="relative max-w-4xl mx-auto h-96 md:h-[500px]">
+            <!-- Service central -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="service-circle bg-gray-700 text-yellow-400 w-32 h-32 flex items-center justify-center rounded-full shadow-lg animate-pulse">
+                    <div class="text-center">
+                        <i class="fas fa-eye text-2xl mb-2"></i>
+                        <h4 class="text-sm font-bold">Suivi des travaux</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Services périphériques -->
+            <!-- Conception des structures - Top Left -->
+            <div class="absolute top-8 left-8 md:top-12 md:left-16">
+                <div class="service-circle bg-yellow-400 text-gray-800 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div class="text-center p-2">
+                        <i class="fas fa-drafting-compass text-xl md:text-2xl mb-1"></i>
+                        <h4 class="text-xs md:text-sm font-bold leading-tight">Conception des structures</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dossier de consultation de l'entreprise - Top Right -->
+            <div class="absolute top-8 right-8 md:top-12 md:right-16">
+                <div class="service-circle bg-yellow-400 text-gray-800 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div class="text-center p-2">
+                        <i class="fas fa-file-contract text-xl md:text-2xl mb-1"></i>
+                        <h4 class="text-xs md:text-sm font-bold leading-tight">Dossier de consultation de l'entreprise</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Expertise et assistance technique - Right -->
+            <div class="absolute top-1/2 right-0 transform -translate-y-1/2">
+                <div class="service-circle bg-gray-700 text-yellow-400 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div class="text-center p-2">
+                        <i class="fas fa-tools text-xl md:text-2xl mb-1"></i>
+                        <h4 class="text-xs md:text-sm font-bold leading-tight">Expertise et assistance technique</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Etude techniques - Bottom Right -->
+            <div class="absolute bottom-8 right-8 md:bottom-12 md:right-16">
+                <div class="service-circle bg-gray-700 text-yellow-400 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div class="text-center p-2">
+                        <i class="fas fa-calculator text-xl md:text-2xl mb-1"></i>
+                        <h4 class="text-xs md:text-sm font-bold leading-tight">Etude techniques</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Metre et optimisation - Bottom Center -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                <div class="service-circle bg-yellow-400 text-gray-800 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div class="text-center p-2">
+                        <i class="fas fa-chart-line text-xl md:text-2xl mb-1"></i>
+                        <h4 class="text-xs md:text-sm font-bold leading-tight">Metre et optimisation</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Renforcement et réhabilitation - Bottom Left -->
+            <div class="absolute bottom-8 left-8 md:bottom-12 md:left-16">
+                <div class="service-circle bg-yellow-400 text-gray-800 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div class="text-center p-2">
+                        <i class="fas fa-hammer text-xl md:text-2xl mb-1"></i>
+                        <h4 class="text-xs md:text-sm font-bold leading-tight">Renforcement et réhabilitation</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Description détaillée des services -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="service-detail bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-orange-500">Conception des structures</h3>
+                <p class="text-gray-600">Conception de structures porteuses innovantes et optimisées selon les normes en vigueur.</p>
+            </div>
+            
+            <div class="service-detail bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-orange-500">Études techniques</h3>
+                <p class="text-gray-600">Réalisation d'études techniques complètes : APS, APD et DCE avec optimisation des coûts.</p>
+            </div>
+            
+            <div class="service-detail bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-orange-500">Expertise et assistance technique</h3>
+                <p class="text-gray-600">Accompagnement technique et expertise pour la réalisation de vos projets.</p>
+            </div>
+            
+            <div class="service-detail bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-orange-500">Suivi des travaux</h3>
+                <p class="text-gray-600">Supervision et contrôle qualité durant toutes les phases de construction.</p>
+            </div>
+            
+            <div class="service-detail bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-orange-500">Métré et optimisation</h3>
+                <p class="text-gray-600">Quantification précise des matériaux et optimisation des coûts de construction.</p>
+            </div>
+            
+            <div class="service-detail bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-orange-500">Renforcement et réhabilitation</h3>
+                <p class="text-gray-600">Solutions de renforcement et réhabilitation pour structures existantes.</p>
+            </div>
+        </div>
     </div>
-</footer>
+</section>
 
-<script src="/JS/EXNOV.js"></script>
+<!-- Section Nos Projets -->
+<section id="nos-projets" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-12">
+            <h2 class="text-4xl font-bold text-gray-800">NOS PROJETS</h2>
+            <div class="hidden md:block">
+                <i class="fas fa-cogs text-6xl text-yellow-400 opacity-20"></i>
+            </div>
+        </div>
+        
+        <div class="mb-8">
+            <p class="text-lg text-gray-700 leading-relaxed">
+                BET EXNOV intervient sur une large palette de projets, alliant expertise technique et qualité d'exécution, 
+                notamment dans les domaines suivants :
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Colonne gauche -->
+            <div class="space-y-6">
+                <div class="bg-yellow-100 p-6 rounded-lg border-l-4 border-yellow-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Construction de villas et d'habitations résidentielles,</h4>
+                    <p class="text-gray-600 text-sm">avec une attention particulière portée à la durabilité et au confort.</p>
+                </div>
+                
+                <div class="bg-yellow-100 p-6 rounded-lg border-l-4 border-yellow-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Réalisation d'études de stabilité des talus et construction de murs de soutènement</h4>
+                    <p class="text-gray-600 text-sm">pour assurer la sécurité des ouvrages et des terrains.</p>
+                </div>
+                
+                <div class="bg-yellow-100 p-6 rounded-lg border-l-4 border-yellow-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Aménagement d'administrations et d'établissements publics,</h4>
+                    <p class="text-gray-600 text-sm">optimisant les espaces de travail et d'accueil.</p>
+                </div>
+                
+                <div class="bg-yellow-100 p-6 rounded-lg border-l-4 border-yellow-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Aménagement des salles de réunion et de conférence,</h4>
+                    <p class="text-gray-600 text-sm">conçues pour optimiser le confort, l'acoustique et la fonctionnalité des espaces professionnels.</p>
+                </div>
+            </div>
+            
+            <!-- Colonne droite -->
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg border-l-4 border-gray-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Aménagement des voiries et espaces publics,</h4>
+                    <p class="text-gray-600 text-sm">favorisant la fluidité et le confort des usagers.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg border-l-4 border-gray-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Aménagement des terrains de sport,</h4>
+                    <p class="text-gray-600 text-sm">alliant qualité des infrastructures et respect des normes sportives pour des espaces performants et sécurisés.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg border-l-4 border-gray-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Réhabilitation et rénovation de cuisines et prestations,</h4>
+                    <p class="text-gray-600 text-sm">garantissant des espaces fonctionnels et conformes aux normes sanitaires.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg border-l-4 border-gray-400 hover:shadow-lg transition-shadow duration-300">
+                    <h4 class="font-bold text-gray-800 mb-2">Élaboration des Cahiers des Prescriptions Spéciales (CPS)</h4>
+                    <p class="text-gray-600 text-sm">pour la maintenance et l'entretien des ouvrages, afin d'assurer leur pérennité.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Nos Clients -->
+<section id="nos-clients" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-12">
+            <h2 class="text-4xl font-bold text-gray-800">NOS CLIENTS</h2>
+            <div class="hidden md:block bg-yellow-100 p-4 rounded-full">
+                <i class="fas fa-users text-4xl text-yellow-600"></i>
+            </div>
+        </div>
+        
+        <div class="mb-8">
+            <p class="text-lg text-gray-700 leading-relaxed">
+                BET EXNOV collabore avec une large gamme d'institutions et entreprises, parmi lesquelles :
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+            <!-- Institutions publiques et administrations -->
+            <div class="client-category">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-lg mb-4 text-center">
+                    <i class="fas fa-landmark text-3xl text-white mb-2"></i>
+                    <h3 class="text-white font-bold text-sm">Institutions publiques et administrations</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Caisse Nationale de Sécurité Sociale (CNSS), Direction Régionale Tanger-Tétouan</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Ministère de l'Industrie, du Commerce, de l'Économie Verte et Numérique</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Haut Commissariat aux Anciens Résistants et Membres de l'Armée de Libération</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Province de Tanger</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Provinces et communes -->
+            <div class="client-category">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-lg mb-4 text-center">
+                    <i class="fas fa-city text-3xl text-white mb-2"></i>
+                    <h3 class="text-white font-bold text-sm">Provinces et communes</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Province de Fahs-Anjra</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Communautés urbaines de Berkane</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Commune de Tamri</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Commune de Briecha</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Établissements d'enseignement et de formation -->
+            <div class="client-category">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-lg mb-4 text-center">
+                    <i class="fas fa-graduation-cap text-3xl text-white mb-2"></i>
+                    <h3 class="text-white font-bold text-sm">Établissements d'enseignement et de formation</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Institut Technique Agricole de Larache</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Institut Royal des Techniciens Spécialisées des Eaux et Forêts, Salé</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Direction Provinciale de l'Artisanat, Tétouan</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Organismes culturels et sectoriels -->
+            <div class="client-category">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-lg mb-4 text-center">
+                    <i class="fas fa-theater-masks text-3xl text-white mb-2"></i>
+                    <h3 class="text-white font-bold text-sm">Organismes culturels et sectoriels</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Fondation Nationale des Musées</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Office National Interprofessionnel des Céréales et Légumineuses</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Entreprises privées -->
+            <div class="client-category">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-lg mb-4 text-center">
+                    <i class="fas fa-building text-3xl text-white mb-2"></i>
+                    <h3 class="text-white font-bold text-sm">Entreprises privées</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Société ITACONS</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Société Ould Bouazza</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-yellow-500 text-xs mt-1.5 mr-2 flex-shrink-0"></i>
+                        <span>Société Singemo</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Pourquoi Nous Choisir -->
+<section id="pourquoi-nous-choisir" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-12">
+            <h2 class="text-4xl font-bold text-gray-800">POURQUOI NOUS CHOISIR?</h2>
+            <div class="hidden md:block bg-yellow-100 p-4 rounded-full">
+                <i class="fas fa-hand-pointer text-4xl text-yellow-600"></i>
+            </div>
+        </div>
+        
+        <div class="mb-12">
+            <p class="text-lg text-gray-700 leading-relaxed max-w-5xl">
+                Chez <strong>BET EXNOV</strong>, notre engagement se fonde sur cinq valeurs essentielles qui garantissent la réussite de vos projets :
+            </p>
+        </div>
+        
+         <!-- Timeline verticale -->
+        <div class="relative max-w-4xl mx-auto">
+            <!-- Ligne de timeline -->
+            <div class="timeline-line"></div>
+            
+            <!-- Valeur 1 - Gauche -->
+            <div class="relative">
+                <div class="timeline-dot" style="top: 120px;"></div>
+                <div class="value-card value-card-left">
+                    <div class="value-number value-number-left">1</div>
+                    <h3 class="value-title">Des études fiables</h3>
+                    <p class="value-description">
+                        Nous fournissons des analyses précises et rigoureuses, basées sur une expertise solide et le respect des normes en vigueur.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Valeur 2 - Droite -->
+            <div class="relative">
+                <div class="timeline-dot" style="top: 120px;"></div>
+                <div class="value-card value-card-right">
+                    <div class="value-number value-number-right">2</div>
+                    <h3 class="value-title">Des solutions innovantes</h3>
+                    <p class="value-description">
+                        Nous intégrons les dernières technologies et méthodes pour optimiser la performance, la durabilité et la rentabilité de vos ouvrages.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Valeur 3 - Gauche -->
+            <div class="relative">
+                <div class="timeline-dot" style="top: 120px;"></div>
+                <div class="value-card value-card-left">
+                    <div class="value-number value-number-left">3</div>
+                    <h3 class="value-title">Des plans détaillés</h3>
+                    <p class="value-description">
+                        Nos plans techniques sont clairs, complets et adaptés aux besoins spécifiques de chaque projet, facilitant leur réalisation.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Valeur 4 - Droite -->
+            <div class="relative">
+                <div class="timeline-dot" style="top: 120px;"></div>
+                <div class="value-card value-card-right">
+                    <div class="value-number value-number-right">4</div>
+                    <h3 class="value-title">Présence sur le terrain</h3>
+                    <p class="value-description">
+                        Notre équipe assure un suivi régulier et un accompagnement direct sur chantier pour garantir la qualité d'exécution.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Valeur 5 - Gauche -->
+            <div class="relative">
+                <div class="timeline-dot" style="top: 120px;"></div>
+                <div class="value-card value-card-left">
+                    <div class="value-number value-number-left">5</div>
+                    <h3 class="value-title">Respect des délais</h3>
+                    <p class="value-description">
+                        Nous nous engageons à livrer nos prestations dans les délais convenus, pour assurer le bon déroulement de vos projets.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section complémentaire avec icônes -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-2xl text-yellow-600"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">Performance</h4>
+                <p class="text-sm text-gray-600">Optimisation continue</p>
+            </div>
+            
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-lightbulb text-2xl text-yellow-600"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">Innovation</h4>
+                <p class="text-sm text-gray-600">Solutions créatives</p>
+            </div>
+            
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-drafting-compass text-2xl text-yellow-600"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">Précision</h4>
+                <p class="text-sm text-gray-600">Plans détaillés</p>
+            </div>
+            
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-2xl text-yellow-600"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">Accompagnement</h4>
+                <p class="text-sm text-gray-600">Suivi personnalisé</p>
+            </div>
+            
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-2xl text-yellow-600"></i>
+                </div>
+                <h4 class="font-bold text-gray-800 mb-2">Ponctualité</h4>
+                <p class="text-sm text-gray-600">Respect des délais</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- <section id="highlights" class="py-12 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-8 text-center text-orange-500">NOS SPÉCIALITÉS</h2>
+                
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-th-large text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">PLANCHERS RÉTICULAIRES</h3>
+                            <p class="text-gray-700">Les planchés réticulaires offrent une grande liberté de conception architecturelle, la possibilité de supprimer les retombées des poutres, une distance entre les poteaux jusqu'au 10m, une mise en œuvre de coffrage facile et rapide, et une optimisation dans le temps d'exécution.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row-reverse items-start space-y-4 md:space-y-0 md:space-x-reverse md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-green-500 to-teal-500 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-compress-arrows-alt text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">DALLE POST TENSION</h3>
+                            <p class="text-gray-700">Parmi les avantages des dalles par Post-Tension c'est la possibilité d'atteindre des portées jusqu'à 15m sans retombés, ce qui est très important pour résoudre les contrainte des espaces ouvertes (sous sols et les salles de conférence…).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-yellow-500 to-orange-500 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-layer-group text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">DALLES ALVÉOLÉES</h3>
+                            <p class="text-gray-700">Une dalle alvéolée est un élément préfabriqué en béton précontraint permettant la réalisation de planchers de grandes portées et de faible encombrement, destinée aux bâtiments non résidentiels, leur performance permet de réaliser rapidement un plancher jusqu'à 19 mètres de portée.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row-reverse items-start space-y-4 md:space-y-0 md:space-x-reverse md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cubes text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">DALLES CORPS CREUX</h3>
+                            <p class="text-gray-700">Plancher hourdis, ce sont les dalles les plus fréquent au domaine du génie civil, l'avantage de ces types de dalles c'est qu'ils sont les moins chers et qu'ils ne nécessitent pas une main d'œuvre hautement qualifiée.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-red-500 to-pink-500 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-building text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">DALLES MIXTES</h3>
+                            <p class="text-gray-700">Une dalle mixte est un élément de construction des bâtiments métalliques à ossature mixte. Elle est composée d'une tôle nervurée sur laquelle on coule une dalle en béton comportant un léger treillis d'armature.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row-reverse items-start space-y-4 md:space-y-0 md:space-x-reverse md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-gray-600 to-gray-800 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-industry text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">CHARPENTE MÉTALLIQUE</h3>
+                            <p class="text-gray-700">La charpente métallique, la solution efficace pour les espaces de l'industrie. Notre bureau d'étude est capable avec ses équipes de faire les études, suivi et l'expertise de tout type de structure métallique.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-item mb-8">
+                    <div class="highlight-content flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="highlight-image-container w-full md:w-1/3">
+                            <div class="bg-gradient-to-br from-green-600 to-blue-600 h-48 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-road text-6xl text-white"></i>
+                            </div>
+                        </div>
+                        <div class="highlight-description w-full md:w-2/3">
+                            <h3 class="text-2xl font-bold mb-2 text-orange-500">VRD</h3>
+                            <p class="text-gray-700">Les VRD, les Voirie et Réseau Divers signifie l'ensemble des travaux pour raccorder un bâtiment ou un espace aux voies et aux différents réseaux existants (eau potable, assainissement, électricité, fibre optique…).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <section id="contact" class="bg-orange-500 py-12">
+            <div class="container mx-auto px-4">
+                <h2 class="text-white text-3xl font-bold mb-8">CONTACTER-NOUS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <form id="emailForm" action="/ajax/email" method="post" onsubmit="return submitEmailForm(this);" class="contact-form bg-white p-8 rounded-lg shadow-lg">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 text-md font-bold mb-2">Nom:</label>
+                            <input type="text" id="name" name="name" required class="form-input w-full">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 text-md font-bold mb-2">Email:</label>
+                            <input type="email" id="email" name="email" required class="form-input w-full">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 text-md font-bold mb-2">Message:</label>
+                            <textarea id="message" name="message" rows="5" required class="form-input w-full"></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit w-full">
+                            <span><i class="fas fa-paper-plane mr-2"></i>Envoyer</span>
+                        </button>
+                    </form>
+                    
+                    <div class="contact-info bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4 text-orange-500">Informations de contact</h3>
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-location-dot text-orange-500 mr-3 mt-1 text-xl"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Adresse</h4>
+                                    <p class="text-gray-600">Bd MOULAY ISMAIL N°22 Etage5 N°19 Tanger</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-phone text-orange-500 mr-3 mt-1 text-xl"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Téléphone</h4>
+                                    <p class="text-gray-600">(+212) 648-409016</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-envelope text-orange-500 mr-3 mt-1 text-xl"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Email</h4>
+                                    <p class="text-gray-600">exnov@exnov.ma</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-clock text-orange-500 mr-3 mt-1 text-xl"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Horaires</h4>
+                                    <p class="text-gray-600">Lun - Ven: 8h00 - 18h00<br>Sam: 9h00 - 13h00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-icons text-center">
+                            <h4 class="font-semibold mb-4 text-gray-800">Suivez-nous</h4>
+                            <a href="#" class="text-gray-600 hover:text-blue-600"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-blue-900"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto text-center">
+            <div class="mb-4">
+                <div class="text-2xl font-bold mb-2">
+                    <span class="text-yellow-400">BET</span> EXNOV
+                </div>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Bureau d'études techniques spécialisé dans le génie civil et la construction. 
+                    Votre partenaire de confiance pour tous vos projets.
+                </p>
+            </div>
+            <div class="border-t border-gray-700 pt-4">
+                <p>&copy; 2024 BET EXNOV. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+  <a href="https://api.whatsapp.com/send?phone=0648409016" target="_blank" rel="noopener noreferrer" id="whatsapp">
+    <img src="./PHOTO/whatsapp.png" alt="WhatsApp" width="55" height="55">
+	</a>
+
+    <script src="/script.js"></script>
 </body>
 </html>

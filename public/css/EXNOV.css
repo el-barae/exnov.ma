@@ -58,12 +58,12 @@ header {
 }
 
 #logo{
-	height: 4rem;
+	height: 3rem;
 }
 
 nav {
 	display: flex;
-	height: 60px;
+	height: 40px;
 	padding-top: 15px;
 	font-family:cursive;
 	margin-right: 50px;
