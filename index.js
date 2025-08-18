@@ -20,8 +20,6 @@ app.post("/ajax/email", function(request, response) {
         }
     });
 
-    console.log("Données reçues :", request.body); // Ajoute ce log pour debug
-
     var textBody = `FROM: ${request.body.name} EMAIL: ${request.body.email} MESSAGE: ${request.body.message}`;
     var htmlBody = `<h2>Mail From: ${request.body.name}</h2><p>email: <a href="mailto:${request.body.email}">${request.body.email}</a></p><p>${request.body.message}</p>`;
     var mail = {
@@ -34,10 +32,8 @@ app.post("/ajax/email", function(request, response) {
 
     transporter.sendMail(mail, function (err, info) {
         if(err) {
-            console.error("Erreur lors de l'envoi de l'email:", err);
             response.status(500).json({ message: "Message non envoyé", error: err.toString() });
         } else {
-            console.log("Email envoyé:", info);
             response.json({ message: `Message envoyé: ${info.messageId}` });
         }
     });
