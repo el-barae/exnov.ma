@@ -560,6 +560,42 @@
         console.log('📱 Menu mobile fonctionnel');
         console.log('🎨 Animations activées');
 
+        // Animation d'entrée progressive
+        document.addEventListener('DOMContentLoaded', function() {
+            const services = document.querySelectorAll('.peripheral-service');
+            const centralService = document.querySelector('.central-service');
+            
+            // Animation du service central
+            setTimeout(() => {
+                centralService.style.opacity = '1';
+                centralService.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 500);
+            
+            // Animation des services périphériques
+            services.forEach((service, index) => {
+                setTimeout(() => {
+                    service.style.opacity = '1';
+                    service.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 700 + (index * 150));
+            });
+        });
+
+        // Effet de survol interactif
+        const peripheralServices = document.querySelectorAll('.peripheral-service');
+        const centralService = document.querySelector('.central-service');
+
+        peripheralServices.forEach(service => {
+            service.addEventListener('mouseenter', () => {
+                centralService.style.transform = 'translate(-50%, -50%) scale(1.05)';
+                centralService.style.boxShadow = '0 15px 35px rgba(251, 191, 36, 0.6)';
+            });
+
+            service.addEventListener('mouseleave', () => {
+                centralService.style.transform = 'translate(-50%, -50%) scale(1)';
+                centralService.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.4)';
+            });
+        });
+
 // window.addEventListener('scroll', function() {
 //     var whatsappButton = document.getElementById('whatsapp');
 //     var scrollPosition = window.scrollY;
